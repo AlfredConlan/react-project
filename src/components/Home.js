@@ -1,26 +1,43 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Home = () => {
+const Home = (props) => {
+  console.log("props: ", props);
+
   const [homeData, setHomeData] = useState([]);
 
-  var options = {
-    method: "GET",
-    url: "https://free-news.p.rapidapi.com/v1/search",
-    params: { q: "dog AND owner", lang: "en" },
-    headers: {
-      "x-rapidapi-host": "free-news.p.rapidapi.com",
-      "x-rapidapi-key": "4b815dbaa8msh9c9083875ac51c9p12bd19jsnb28650bdc115",
-    },
-  };
-
-  const fetchHome = () => {
-    return axios.request(options).then((homes) => homes.data);
-  };
-
   useEffect(() => {
+    let queryString = "";
+
+    if (props.searchValue !== "" && props.searchValue !== null) {
+      console.log("inside If Statement True");
+      console.log(props.searchValue);
+      queryString = props.searchValue;
+    } else {
+      console.log("inside If Statement False");
+      queryString = "dog AND owner NOT china NOT attack NOT dead";
+    }
+
+    var options = {
+      method: "GET",
+      url: "https://free-news.p.rapidapi.com/v1/search",
+      params: { q: queryString, lang: "en" },
+      headers: {
+        "x-rapidapi-host": "free-news.p.rapidapi.com",
+        "x-rapidapi-key": "4b815dbaa8msh9c9083875ac51c9p12bd19jsnb28650bdc115",
+      },
+    };
+
+    const fetchHome = () => {
+      return axios.request(options).then((homes) => homes.data);
+    };
+
     fetchHome().then((homeResponse) => {
-      setHomeData(homeResponse["articles"]);
+      console.log("data is: ", homeResponse);
+      // remove duplicates
+      const newArray = homeResponse["articles"].filter((v, i, a) => a.findIndex((t) => t.title === v.title) === i);
+
+      setHomeData(newArray);
     });
   }, []);
 
@@ -33,7 +50,7 @@ const Home = () => {
             <div className="row pb-5">
               <div className="col ">
                 <div className="card ">
-                  <img src={home.media} className="card-img-top" alt="..." />
+                  <img src={home.media} className="card-img-top p-5" alt="..." />
                   <div className="card-body">
                     <h5 className="card-title">{home.title}</h5>
                     <p className="card-text">{home.summary}</p>

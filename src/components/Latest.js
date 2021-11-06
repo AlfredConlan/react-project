@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Latest = () => {
+const Latest = (props) => {
+  console.log("props: ", props);
   const [latestData, setLatestData] = useState([]);
 
-  var options = {
-    method: "GET",
-    url: "https://free-news.p.rapidapi.com/v1/search",
-    params: { q: "a", lang: "en" },
-    headers: {
-      "x-rapidapi-host": "free-news.p.rapidapi.com",
-      "x-rapidapi-key": "4b815dbaa8msh9c9083875ac51c9p12bd19jsnb28650bdc115",
-    },
-  };
-
-  const fetchLatest = () => {
-    return axios.request(options).then((homes) => homes.data);
-  };
-
   useEffect(() => {
+    var options = {
+      method: "GET",
+      url: "https://free-news.p.rapidapi.com/v1/search",
+      params: { q: "a", lang: "en" },
+      headers: {
+        "x-rapidapi-host": "free-news.p.rapidapi.com",
+        "x-rapidapi-key": "4b815dbaa8msh9c9083875ac51c9p12bd19jsnb28650bdc115",
+      },
+    };
+
+    const fetchLatest = () => {
+      return axios.request(options).then((homes) => homes.data);
+    };
+
     fetchLatest().then((latestResponse) => {
-      setLatestData(latestResponse["articles"]);
+      // remove duplicates
+      const newArray = latestResponse["articles"].filter((v, i, a) => a.findIndex((t) => t.title === v.title) === i);
+
+      setLatestData(newArray);
     });
   }, []);
 

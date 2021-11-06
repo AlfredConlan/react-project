@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Headlines = () => {
+const Headlines = (props) => {
+  console.log("props: ", props);
   const [headlineData, setHeadlineData] = useState([]);
 
-  var options = {
-    method: "GET",
-    url: "https://free-news.p.rapidapi.com/v1/search",
-    params: { q: "a", lang: "en" },
-    headers: {
-      "x-rapidapi-host": "free-news.p.rapidapi.com",
-      "x-rapidapi-key": "4b815dbaa8msh9c9083875ac51c9p12bd19jsnb28650bdc115",
-    },
-  };
-
-  const fetchHeadlines = () => {
-    return axios.request(options).then((homes) => homes.data);
-  };
-
   useEffect(() => {
+    var options = {
+      method: "GET",
+      url: "https://free-news.p.rapidapi.com/v1/search",
+      params: { q: "a", lang: "en" },
+      headers: {
+        "x-rapidapi-host": "free-news.p.rapidapi.com",
+        "x-rapidapi-key": "4b815dbaa8msh9c9083875ac51c9p12bd19jsnb28650bdc115",
+      },
+    };
+
+    const fetchHeadlines = () => {
+      return axios.request(options).then((homes) => homes.data);
+    };
+
     fetchHeadlines().then((headlineResponse) => {
-      setHeadlineData(headlineResponse["articles"]);
+      // remove duplicates
+      const newArray = headlineResponse["articles"].filter((v, i, a) => a.findIndex((t) => t.title === v.title) === i);
+
+      setHeadlineData(newArray);
     });
   }, []);
 

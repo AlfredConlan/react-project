@@ -2,7 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../img/logo.png";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  function handleButtonClick(e) {
+    e.preventDefault();
+    const searchInput = document.getElementById("search-input").value;
+    props.setSearchValue(searchInput);
+  }
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg text-light bg-green">
@@ -41,6 +47,12 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
+          <form class="d-flex me-auto">
+            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input" />
+            <button onClick={handleButtonClick} className="btn btn-outline-success" type="submit" id="search-button">
+              Search
+            </button>
+          </form>
         </div>
       </nav>{" "}
     </div>
