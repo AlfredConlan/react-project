@@ -4,13 +4,22 @@ import axios from "axios";
 const Latest = () => {
   const [latestData, setLatestData] = useState([]);
 
+  var options = {
+    method: "GET",
+    url: "https://free-news.p.rapidapi.com/v1/search",
+    params: { q: "a", lang: "en" },
+    headers: {
+      "x-rapidapi-host": "free-news.p.rapidapi.com",
+      "x-rapidapi-key": "4b815dbaa8msh9c9083875ac51c9p12bd19jsnb28650bdc115",
+    },
+  };
+
   const fetchLatest = () => {
-    return axios.get("https://newsapi.org/v2/everything?language=en&sortBy=publishedAt&q=a&apiKey=d0c40a3778c242da91dccb23508fa472").then((latests) => latests.data);
+    return axios.request(options).then((homes) => homes.data);
   };
 
   useEffect(() => {
     fetchLatest().then((latestResponse) => {
-      console.log(latestResponse);
       setLatestData(latestResponse["articles"]);
     });
   }, []);
@@ -25,13 +34,13 @@ const Latest = () => {
             <div className="row pb-5">
               <div className="col ">
                 <div className="card ">
-                  <img src={latest.urlToImage} className="card-img-top" alt="..." />
+                  <img src={latest.media} className="card-img-top" alt="..." />
                   <div className="card-body">
                     <h5 className="card-title">{latest.title}</h5>
-                    <p className="card-text">{latest.description}</p>
-                    <p className="card-text">{latest.source.name}</p>
-                    <p className="card-text">{latest.publishedAt.replace("T", " ").replace("Z", "")}</p>
-                    <a href={latest.url} target="_blank" rel="noreferrer" className="btn btn-primary">
+                    <p className="card-text">{latest.summary}</p>
+                    <p className="card-text">{latest.author}</p>
+                    <p className="card-text">{latest.published_date}</p>
+                    <a href={latest.link} target="_blank" rel="noreferrer" className="btn btn-primary">
                       View Full Article
                     </a>
                   </div>
