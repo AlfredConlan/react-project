@@ -12,7 +12,7 @@ const Home = (props) => {
     if (props.searchValue !== "" && props.searchValue !== null) {
       console.log("inside If Statement True");
       console.log(props.searchValue);
-      queryString = props.searchValue;
+      queryString = "dog AND " + props.searchValue;
     } else {
       console.log("inside If Statement False");
       queryString = "dog AND owner NOT china NOT attack NOT dead";
@@ -39,7 +39,7 @@ const Home = (props) => {
 
       setHomeData(newArray);
     });
-  }, []);
+  }, [props.searchValue]);
 
   return (
     <div>

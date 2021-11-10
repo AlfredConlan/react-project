@@ -12,6 +12,7 @@ code {
     monospace;
 }
 
-.bg-green {
-  background-color: #53ba47;
+.bg-custom {
+background-color: #ff7a59;
+;
 }

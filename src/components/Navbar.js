@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../img/logo.png";
+import { navbar } from "bootstrap";
 
-const Navbar = (props) => {
+const NavBar = (props) => {
   function handleButtonClick(e) {
     e.preventDefault();
     const searchInput = document.getElementById("search-input").value;
@@ -11,52 +12,51 @@ const Navbar = (props) => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg text-light bg-green">
-        <div className="container-fluid">
-          <Link to="/home">
+      <navbar class="navbar navbar-expand-lg navbar-dark bg-custom">
+        <div class="container-fluid">
+          <Link className="me-3" to="/home">
             <img src={logo} alt="logo" />
           </Link>
-
           <button
-            className="navbar-toggler"
+            class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link active link-light ms-3" to="/home" aria-current="page">
+                <Link className="nav-link active link-light " to="/home" aria-current="page">
                   Home
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link link-light" to="/headlines">
+                <Link className="nav-link active link-light" to="/headlines">
                   Headlines
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link link-light" to="/latest">
+                <Link className="nav-link active link-light" to="/latest">
                   Latest
                 </Link>
               </li>
             </ul>
+            <form class="d-flex ms-auto me-1">
+              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input" />
+              <button onClick={handleButtonClick} className="btn btn-outline-light" type="submit" id="search-button">
+                Search
+              </button>
+            </form>{" "}
           </div>
-          <form class="d-flex me-auto">
-            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input" />
-            <button onClick={handleButtonClick} className="btn btn-outline-success" type="submit" id="search-button">
-              Search
-            </button>
-          </form>
         </div>
-      </nav>{" "}
+      </navbar>{" "}
     </div>
   );
 };
 
-export default Navbar;
+export default NavBar;
