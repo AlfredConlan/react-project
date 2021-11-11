@@ -8,11 +8,8 @@ const Home = (props) => {
     let queryString = "";
 
     if (props.searchValue !== "" && props.searchValue !== null) {
-      console.log("inside If Statement True");
-      console.log(props.searchValue);
       queryString = "dog AND " + props.searchValue;
     } else {
-      console.log("inside If Statement False");
       queryString = "dog AND owner NOT china NOT attack NOT dead";
     }
 
