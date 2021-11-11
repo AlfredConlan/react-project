@@ -7,6 +7,7 @@
     -React
     -React Router
     -Boostrap 5
+    -Free News API
 
 
 ## Known Issues // Room for Improvement
