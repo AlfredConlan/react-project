@@ -1,4 +1,4 @@
-![Main Page3](./templates/assets/img/screenshot-of-home.png)
+![Main Page3](./src/img/screenshot-of-home.png)
 
 ## Featured stack
 
