@@ -29,6 +29,3 @@ https://pip-n-sam-news.herokuapp.com/
 
 - Al Conlan
 
-<a href="https://github.com/AlfredConlan/react-project/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=AlfredConlan/react-project/" />
-</a>
