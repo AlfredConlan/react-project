@@ -2,14 +2,24 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Headlines = (props) => {
-  console.log("props: ", props);
   const [headlineData, setHeadlineData] = useState([]);
 
   useEffect(() => {
+    let queryString = "";
+
+    if (props.searchValue !== "" && props.searchValue !== null) {
+      console.log("inside If Statement True");
+      console.log(props.searchValue);
+      queryString = props.searchValue;
+    } else {
+      console.log("inside If Statement False");
+      queryString = "united states";
+    }
+
     var options = {
       method: "GET",
       url: "https://free-news.p.rapidapi.com/v1/search",
-      params: { q: "a", lang: "en" },
+      params: { q: queryString, lang: "en" },
       headers: {
         "x-rapidapi-host": "free-news.p.rapidapi.com",
         "x-rapidapi-key": "4b815dbaa8msh9c9083875ac51c9p12bd19jsnb28650bdc115",
@@ -17,7 +27,7 @@ const Headlines = (props) => {
     };
 
     const fetchHeadlines = () => {
-      return axios.request(options).then((homes) => homes.data);
+      return axios.request(options).then((headlines) => headlines.data);
     };
 
     fetchHeadlines().then((headlineResponse) => {
@@ -26,7 +36,7 @@ const Headlines = (props) => {
 
       setHeadlineData(newArray);
     });
-  }, []);
+  }, [props.searchValue]);
 
   return (
     <div>

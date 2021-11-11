@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Home = (props) => {
-  console.log("props: ", props);
-
   const [homeData, setHomeData] = useState([]);
 
   useEffect(() => {
@@ -33,7 +31,6 @@ const Home = (props) => {
     };
 
     fetchHome().then((homeResponse) => {
-      console.log("data is: ", homeResponse);
       // remove duplicates
       const newArray = homeResponse["articles"].filter((v, i, a) => a.findIndex((t) => t.title === v.title) === i);
 
